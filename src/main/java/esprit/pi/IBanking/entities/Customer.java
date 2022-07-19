@@ -13,6 +13,11 @@ import java.math.BigDecimal;
 @Table(name = "CUSTOMER")
 public class Customer {
 
+	
+    @Id
+    @Column(name = "ID", nullable = false)
+    private Long id;
+    
     @NotEmpty
     @Column(name = "CIN", unique = true, nullable = false, length = 8)
     private String cin;

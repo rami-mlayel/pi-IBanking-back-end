@@ -1,4 +1,4 @@
-package esprit.pi.SoftIB;
+package esprit.pi.IBanking;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
