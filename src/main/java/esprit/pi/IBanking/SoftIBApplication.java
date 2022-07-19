@@ -1,4 +1,4 @@
-package esprit.pi.SoftIB;
+package esprit.pi.IBanking;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

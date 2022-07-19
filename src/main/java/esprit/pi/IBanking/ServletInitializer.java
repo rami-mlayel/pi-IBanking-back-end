@@ -1,4 +1,4 @@
-package esprit.pi.SoftIB;
+package esprit.pi.IBanking;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

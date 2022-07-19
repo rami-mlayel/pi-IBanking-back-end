@@ -1,6 +1,8 @@
 package esprit.pi.IBanking.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import esprit.pi.IBanking.enumeration.AccountType;
 import lombok.Getter;
 import lombok.ToString;
 
