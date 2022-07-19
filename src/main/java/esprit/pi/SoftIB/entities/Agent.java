@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 @ToString
 @Table(name = "AGENT")
 public class Agent {
-	
+
     @Id
     @Column(name = "ID", nullable = false)
     private Long id;
