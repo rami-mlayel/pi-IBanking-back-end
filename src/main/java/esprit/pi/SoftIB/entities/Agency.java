@@ -1,4 +1,4 @@
-package esprit.pi.IBanking.entities;
+package esprit.pi.SoftIB.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package esprit.pi.IBanking.enumeration;
+package esprit.pi.SoftIB.enumeration;
 
 public enum AccountType {
     CURRENT_ACCOUNT,
