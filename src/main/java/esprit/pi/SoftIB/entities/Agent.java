@@ -28,9 +28,8 @@ public class Agent {
     @Column(name = "IS_ADMIN")
     private boolean isAdmin;
 
-    @ManyToOne
-    @JoinColumn(name = "idUser", referencedColumnName = "id", insertable=false, updatable=false)
-    private User userAgent;
+    @OneToOne(mappedBy="agent")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "idAgency", referencedColumnName = "id", insertable=false, updatable=false)

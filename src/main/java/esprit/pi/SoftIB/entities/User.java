@@ -47,11 +47,13 @@ public class User {
     @Column(name = "EMAIL", unique = true)
     private String email;
 
-    @JsonIgnore
-    @OneToMany(mappedBy="userAgent")
-    private List<Agent> agents;
+    @OneToOne
+    private Agent agents;
+
+    @OneToOne
+    private Customer customers;
 
     @JsonIgnore
-    @OneToMany(mappedBy="userCustomer")
-    private List<Customer> customers;
+    @OneToMany(mappedBy="userAccount")
+    private List<Account> accounts;
 }
