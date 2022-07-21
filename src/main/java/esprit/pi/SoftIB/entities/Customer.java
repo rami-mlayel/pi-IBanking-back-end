@@ -32,4 +32,7 @@ public class Customer {
     @ManyToOne
     @JoinColumn(name = "idAgency", referencedColumnName = "id", insertable=false, updatable=false)
     private Agency agencyCustomer;
+
+    @OneToOne
+    private AccountRequest accountRequest;
 }
