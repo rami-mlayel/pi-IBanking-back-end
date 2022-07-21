@@ -34,9 +34,9 @@ public class Account {
     @Column(name = "EMAIL", unique = true)
     private String email;
 
-    @JsonIgnore
-    @OneToMany(mappedBy="userAgent")
-    private List<Agent> agents;
+    @ManyToOne
+    @JoinColumn(name = "idUser", referencedColumnName = "id", insertable=false, updatable=false)
+    private User userAccount;
 
     @Enumerated(EnumType.STRING)
     private AccountType type;
