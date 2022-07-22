@@ -1,22 +1,23 @@
 package esprit.pi.SoftIB.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import esprit.pi.SoftIB.enumeration.State;
 import lombok.Getter;
 import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Getter
 @ToString
-@Table(name = "USER")
-public class User {
+@Table(name = "ACCOUNT_REQUEST")
+public class AccountRequest {
 
+	
     @Id
     @Column(name = "ID", nullable = false)
     private Long id;
@@ -39,21 +40,20 @@ public class User {
     private String phoneNumber;
 
     @NotEmpty
-    @Column(name = "PERSONAL_ADDRESS")
-    private String personalAddress;
-
-    @NotEmpty
     @Email
     @Column(name = "EMAIL", unique = true)
     private String email;
 
-    @OneToOne
-    private Agent agent;
+    @NotEmpty
+    @Column(name = "JOB", unique = true, nullable = false, length = 8)
+    private String job;
 
-    @OneToOne
+    @Column(name = "SALARY", nullable = false)
+    private BigDecimal salary;
+
+    @Enumerated(EnumType.STRING)
+    private State state;
+
+    @OneToOne(mappedBy="accountRequest")
     private Customer customer;
-
-    @JsonIgnore
-    @OneToMany(mappedBy="userAccount")
-    private List<Account> accounts;
 }
