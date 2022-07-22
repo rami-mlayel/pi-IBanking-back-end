@@ -1,7 +1,5 @@
 package esprit.pi.SoftIB.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import esprit.pi.SoftIB.enumeration.AccountType;
 import lombok.Getter;
 import lombok.ToString;
@@ -9,7 +7,6 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
-import java.util.List;
 
 @Entity
 @Getter
@@ -22,11 +19,11 @@ public class Account {
     private Long id;
 
     @NotEmpty
-    @Column(name = "ACCOUNT_NUMBER", nullable = false, length = 40)
+    @Column(name = "ACCOUNT_NUMBER", nullable = false, length = 40, unique = true)
     private String accountNumber;
 
     @NotEmpty
-    @Column(name = "RIB", nullable = false, length = 40)
+    @Column(name = "RIB", nullable = false, length = 40, unique = true)
     private String RIB;
 
     @NotEmpty

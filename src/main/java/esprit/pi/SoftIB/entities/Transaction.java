@@ -1,17 +1,15 @@
 package esprit.pi.SoftIB.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import esprit.pi.SoftIB.enumeration.TransactionType;
 import lombok.Getter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Getter
@@ -23,23 +21,19 @@ public class Transaction {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @NotEmpty
-    @Column(name = "FIRST_NAME", nullable = false, length = 40)
-    private Float amount;
+    @ManyToOne(optional = false)
+    @JoinColumn(name="ID")
+    private Account sender;
 
-    @NotEmpty
-    @Column(name = "LAST_NAME", nullable = false, length = 40)
-    private String lastName;
+    @ManyToOne(optional = false)
+    @JoinColumn(name="ID")
+    private Account receiver;
 
-    @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern="dd-MM-yyyy")
-    @Column(name = "DATE")
-    private Date date;
-
-    @Temporal(TemporalType.TIME)
-    @JsonFormat(pattern="HH:MM")
-    @Column(name = "TIME", nullable = false)
-    private Date time;
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern="yyyy-MM-dd@HH:mm:ss")
+    @CreationTimestamp
+    @Column(name = "TRANSACTION_DATE_TIME", nullable = false)
+    private Date transactionDateTime;
 
     @NotEmpty
     @Column(name = "TRANSACTION_TYPE")
