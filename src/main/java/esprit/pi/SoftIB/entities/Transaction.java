@@ -21,12 +21,26 @@ public class Transaction {
     @Column(name = "ID", nullable = false)
     private Long id;
 
+    @NotEmpty
+    @Column(name = "AMOUNT", nullable = false, length = 40)
+    private BigDecimal amount;
+
+    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern="dd-MM-yyyy")
+    @Column(name = "DATE")
+    private Date date;
+
+    @Temporal(TemporalType.TIME)
+    @JsonFormat(pattern="HH:MM")
+    @Column(name = "TIME", nullable = false)
+    private Date time;
+
     @ManyToOne(optional = false)
-    @JoinColumn(name="ID")
+    @JoinColumn(name="ID_SENDER")
     private Account sender;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name="ID")
+    @JoinColumn(name="ID_RECEIVER")
     private Account receiver;
 
     @Temporal(TemporalType.TIMESTAMP)

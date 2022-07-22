@@ -1,5 +1,6 @@
 package esprit.pi.SoftIB.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import esprit.pi.SoftIB.enumeration.AccountType;
 import lombok.Getter;
 import lombok.ToString;
@@ -7,6 +8,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 @Entity
 @Getter
@@ -37,4 +39,8 @@ public class Account {
 
     @Enumerated(EnumType.STRING)
     private AccountType type;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "account")
+    private List<LoanRequest> loanRequestList;
 }

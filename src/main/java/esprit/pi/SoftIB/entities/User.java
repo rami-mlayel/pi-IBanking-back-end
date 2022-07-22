@@ -48,10 +48,10 @@ public class User {
     private String email;
 
     @OneToOne
-    private Agent agents;
+    private Agent agent;
 
     @OneToOne
-    private Customer customers;
+    private Customer customer;
 
     @JsonIgnore
     @OneToMany(mappedBy="userAccount")

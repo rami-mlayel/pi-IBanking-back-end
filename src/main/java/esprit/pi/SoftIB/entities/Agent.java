@@ -34,4 +34,8 @@ public class Agent {
     @ManyToOne
     @JoinColumn(name = "idAgency", referencedColumnName = "id", insertable=false, updatable=false)
     private Agency agencyAgent;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "agent")
+    private List<LoanRequest> loanRequestList;
 }
