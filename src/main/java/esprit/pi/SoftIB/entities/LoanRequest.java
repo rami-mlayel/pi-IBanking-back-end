@@ -18,7 +18,7 @@ import java.util.List;
 @Entity
 @Getter
 @ToString
-@Table(name = "USER")
+@Table(name = "LOAN_REQUEST")
 public class LoanRequest {
 
     @Id
