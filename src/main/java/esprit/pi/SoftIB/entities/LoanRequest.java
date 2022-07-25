@@ -1,19 +1,14 @@
 package esprit.pi.SoftIB.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import esprit.pi.SoftIB.enumeration.LoanType;
 import lombok.Getter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.awt.*;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
 
 @Entity
 @Getter

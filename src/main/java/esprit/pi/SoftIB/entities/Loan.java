@@ -20,8 +20,12 @@ public class Loan {
     private Long id;
 
     @NotNull
-    @Column(name = "SUM", nullable = false)
-    private BigDecimal sum;
+    @Column(name = "ACTUAL_SUM", nullable = false)
+    private BigDecimal actualSum;
+
+    @NotNull
+    @Column(name = "RETURNED_SUM", nullable = false)
+    private BigDecimal returnedSum;
 
     @NotNull
     @Column(name = "MONTHLY_PAYMENT", nullable = false)
