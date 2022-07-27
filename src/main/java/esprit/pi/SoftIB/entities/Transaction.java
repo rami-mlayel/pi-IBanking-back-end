@@ -5,6 +5,7 @@ import esprit.pi.SoftIB.enumeration.TransactionType;
 import lombok.Getter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -25,23 +26,9 @@ public class Transaction {
     @Column(name = "AMOUNT", nullable = false, length = 40)
     private BigDecimal amount;
 
-    @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern="dd-MM-yyyy")
-    @Column(name = "DATE")
-    private Date date;
+    private String senderAccountNumber;
 
-    @Temporal(TemporalType.TIME)
-    @JsonFormat(pattern="HH:MM")
-    @Column(name = "TIME", nullable = false)
-    private Date time;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name="ID_SENDER")
-    private Account sender;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name="ID_RECEIVER")
-    private Account receiver;
+    private String receiverAccountNumber;
 
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern="yyyy-MM-dd@HH:mm:ss")
@@ -52,6 +39,10 @@ public class Transaction {
     @NotEmpty
     @Column(name = "TRANSACTION_TYPE")
     private TransactionType transactionType;
+
+    @NotEmpty
+    @Column(name = "TRANSACTION_STATUS")
+    private TransactionStatus transactionStatus;
 
     @NotEmpty
     @Column(name = "COMMISSION_RATE")
