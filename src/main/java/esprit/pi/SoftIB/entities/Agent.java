@@ -1,5 +1,6 @@
 package esprit.pi.SoftIB.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.ToString;
@@ -7,6 +8,8 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import java.util.Date;
 import java.util.List;
 
 
@@ -27,6 +30,27 @@ public class Agent {
     @NotNull
     @Column(name = "IS_ADMIN")
     private boolean isAdmin;
+    
+    @NotEmpty
+    @Column(name = "FIRST_NAME", nullable = false, length = 40)
+    private String firstName;
+
+    @NotEmpty
+    @Column(name = "LAST_NAME", nullable = false, length = 40)
+    private String lastName;
+    
+    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern="dd-MM-yyyy")
+    @Column(name = "BIRTH_DATE")
+    private Date birthDate;
+
+    @NotEmpty
+    @Column(name = "PHONE_NUMBER")
+    private String phoneNumber;
+
+    @NotEmpty
+    @Column(name = "PERSONAL_ADDRESS")
+    private String personalAddress;
 
     @OneToOne(mappedBy="agent")
     private User user;

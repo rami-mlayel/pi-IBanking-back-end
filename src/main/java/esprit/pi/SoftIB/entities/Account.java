@@ -8,6 +8,8 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -23,6 +25,10 @@ public class Account {
     @NotEmpty
     @Column(name = "ACCOUNT_NUMBER", nullable = false, length = 40, unique = true)
     private String accountNumber;
+
+    @NotNull
+    @Column(name = "BALANCE")
+    private BigDecimal balance;
 
     @NotEmpty
     @Column(name = "RIB", nullable = false, length = 40, unique = true)

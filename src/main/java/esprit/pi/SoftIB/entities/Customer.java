@@ -5,7 +5,11 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -24,6 +28,27 @@ public class Customer {
 
     @Column(name = "SALARY", nullable = false)
     private BigDecimal salary;
+    
+    @NotEmpty
+    @Column(name = "FIRST_NAME", nullable = false, length = 40)
+    private String firstName;
+
+    @NotEmpty
+    @Column(name = "LAST_NAME", nullable = false, length = 40)
+    private String lastName;
+    
+    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern="dd-MM-yyyy")
+    @Column(name = "BIRTH_DATE")
+    private Date birthDate;
+
+    @NotEmpty
+    @Column(name = "PHONE_NUMBER")
+    private String phoneNumber;
+
+    @NotEmpty
+    @Column(name = "PERSONAL_ADDRESS")
+    private String personalAddress;
 
     @OneToOne(mappedBy="customer")
     private User user;
