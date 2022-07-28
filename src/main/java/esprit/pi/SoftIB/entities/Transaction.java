@@ -1,11 +1,12 @@
 package esprit.pi.SoftIB.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import esprit.pi.SoftIB.enumeration.TransactionStatus;
 import esprit.pi.SoftIB.enumeration.TransactionType;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -14,11 +15,13 @@ import java.util.Date;
 
 @Entity
 @Getter
+@Setter
 @ToString
 @Table(name = "TRANSACTION")
 public class Transaction {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", nullable = false)
     private Long id;
 

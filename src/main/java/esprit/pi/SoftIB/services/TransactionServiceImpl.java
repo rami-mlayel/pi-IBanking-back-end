@@ -1,6 +1,9 @@
 package esprit.pi.SoftIB.services;
 
+import esprit.pi.SoftIB.entities.Account;
 import esprit.pi.SoftIB.entities.Transaction;
+import esprit.pi.SoftIB.enumeration.TransactionStatus;
+import esprit.pi.SoftIB.enumeration.TransactionType;
 import esprit.pi.SoftIB.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,53 +30,106 @@ public class TransactionServiceImpl implements ITransactionService {
 
 
     @Override
-    public boolean retrieveMoney(String AccountNumber, BigDecimal amount) {
+    @Transactional
+    public Transaction retrieveMoney(String accountNumber, BigDecimal amount) {
         Transaction transaction = new Transaction();
-        //Todo create a transaction
+        transaction.setTransactionType(TransactionType.WITHDRAWAL);
+        transaction.setTransactionStatus(TransactionStatus.PENDING);
+        transaction.setCommissionRate(new BigDecimal(1));
+        transaction.setAmount(amount);
+        transaction.setReceiverAccountNumber(accountNumber);
+        transaction.setSenderAccountNumber(accountNumber);
+
+        Account account = new Account();
+        //todo get account by accountNumber
         BigDecimal accountBalance = account.getBalance();
         BigDecimal retrievedMoney = transaction.getAmount().add(transaction.getCommissionRate());
         if (accountBalance.compareTo(retrievedMoney) != -1) {
             account.setBalance(accountBalance.subtract(retrievedMoney));
-            return true;
+            transaction.setTransactionStatus(TransactionStatus.COMPLETED);
         }
-        return false;
+        transactionRepository.save(transaction);
+        //save account
+        return transaction;
     }
 
     @Override
     @Transactional
-    public boolean depositMoney(String AccountNumber, BigDecimal amount) {
+    public Transaction depositMoney(String accountNumber, BigDecimal amount) {
         Transaction transaction = new Transaction();
-        //Todo create a transaction
-        BigDecimal accountBalance = account.getBalance();
-        BigDecimal retrievedMoney = transaction.getAmount().add(transaction.getCommissionRate());
-        account.setBalance(accountBalance.subtract(retrievedMoney));
-        return true;
+        transaction.setTransactionType(TransactionType.DEPOSIT);
+        transaction.setTransactionStatus(TransactionStatus.PENDING);
+        transaction.setCommissionRate(new BigDecimal(0));
+        transaction.setAmount(amount);
+        transaction.setReceiverAccountNumber(accountNumber);
+        transaction.setSenderAccountNumber(accountNumber);
+        //todo get account by accountNumber
+        Account account = new Account();
+        account.setBalance(account.getBalance().add(amount));
+        transaction.setTransactionStatus(TransactionStatus.COMPLETED);
+        transactionRepository.save(transaction);
+        //save account
+        return transaction;
     }
 
     @Override
-    public boolean depositCheck(String AccountNumber, BigDecimal amount) {
-        return false;
+    @Transactional
+    public Transaction depositCheck(String accountNumber, BigDecimal amount) {
+        Transaction transaction = new Transaction();
+        transaction.setTransactionType(TransactionType.DEP_CHECK);
+        transaction.setTransactionStatus(TransactionStatus.PENDING);
+        transaction.setCommissionRate(new BigDecimal(2));
+        transaction.setAmount(amount);
+        transaction.setReceiverAccountNumber(accountNumber);
+        //todo get account by accountNumber
+        Account account = new Account();
+        account.setBalance(account.getBalance().add(amount));
+        transaction.setTransactionStatus(TransactionStatus.COMPLETED);
+        transactionRepository.save(transaction);
+        //save account
+        return transaction;
     }
 
 
     @Override
     @Transactional
-    public boolean sendMoney(String senderAccountNumber, String receiverAccountNumber, BigDecimal amount) {
+    public Transaction sendMoney(String senderAccountNumber, String receiverAccountNumber, BigDecimal amount) {
+
+        //todo get sender and receiver account by number
+        Account sender = new Account();
+        Account receiver = new Account();
 
         BigDecimal senderBalance = sender.getBalance();
         BigDecimal receiverBalance = receiver.getBalance();
 
-        receiver.getBalance().add(amount);
-        sender.getBalance().subtract(amount);
 
+        Transaction transaction = new Transaction();
+        transaction.setTransactionType(TransactionType.TRANSFER);
+        transaction.setTransactionStatus(TransactionStatus.PENDING);
+        //todo create commision Rate
+        transaction.setCommissionRate(BigDecimal.valueOf(1.5));
+        transaction.setAmount(amount);
+        transaction.setReceiverAccountNumber(receiverAccountNumber);
+        transaction.setSenderAccountNumber(senderAccountNumber);
 
-        return false;
+        BigDecimal sentMoney = transaction.getAmount().add(transaction.getCommissionRate());
+
+        if (senderBalance.compareTo(sentMoney) != -1) {
+            receiver.setBalance(receiver.getBalance().add(amount));
+            sender.setBalance(sender.getBalance().subtract(sentMoney));
+            transaction.setTransactionStatus(TransactionStatus.COMPLETED);
+        }
+
+        transactionRepository.save(transaction);
+        //save account
+
+        return transaction;
 
     }
 
     @Override
     public List<Transaction> getAllTransaction(String type, String senderAccountNumber, String receiverAccountNumber) {
-        List<Transaction> transactionList = new ArrayList<Transaction>();
+        List<Transaction> transactionList = new ArrayList<>();
         transactionRepository.findAll().forEach(transactionList::add);
 
         if (type != null)

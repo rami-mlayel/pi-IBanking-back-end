@@ -1,6 +1,5 @@
 package esprit.pi.SoftIB.controllers;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import esprit.pi.SoftIB.entities.Transaction;
 import esprit.pi.SoftIB.services.ITransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +24,10 @@ public class TransactionRestController {
         return transactionService.getTransactionById(transactionID);
     }
 
-    @RequestMapping(value = "/GET/all", method = RequestMethod.POST, produces = "application/json")
-    public Collection<Transaction> getAllTransactions(@RequestBody ObjectNode objectNode) {
-        return transactionService.getAllTransaction("TYPE",null,null);
+    @GetMapping(value = "/GET/all")
+    public Collection<Transaction> getAllTransactions(@RequestParam(name = "TYPE", required = false) String type, @RequestParam(name = "SENDER", required = false) String sender, @RequestParam(name = "RECEIVER", required = false) String receiver) {
+        return transactionService.getAllTransaction(type, sender, receiver);
     }
-
-
-
 
 
 
