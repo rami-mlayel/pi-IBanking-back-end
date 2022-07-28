@@ -17,8 +17,8 @@ import java.util.Date;
 @Table(name = "ACCOUNT_REQUEST")
 public class AccountRequest {
 
-	
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
 
@@ -56,4 +56,19 @@ public class AccountRequest {
 
     @OneToOne(mappedBy="accountRequest")
     private Customer customer;
+
+    @Column(name = "IS_APPROVED", nullable = false)
+    private boolean isApproved;
+
+    @Column(name = "REFERRENCE", nullable = false)
+    private boolean reference;
+
+    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern="dd-MM-yyyy")
+    @Column(name = "PREFERED_DATE")
+    private Date preferedDate;
+
+
+
 }
+

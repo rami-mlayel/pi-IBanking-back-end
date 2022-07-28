@@ -1,11 +1,6 @@
 package esprit.pi.SoftIB.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import esprit.pi.SoftIB.enumeration.RoleEnum;
 import lombok.Data;
@@ -17,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Role {
 	@Id
-	@GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@Enumerated(EnumType.STRING)
