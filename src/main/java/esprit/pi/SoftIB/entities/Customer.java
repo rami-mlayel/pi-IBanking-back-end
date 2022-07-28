@@ -8,6 +8,8 @@ import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import esprit.pi.SoftIB.enumeration.Job;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -36,6 +38,10 @@ public class Customer {
     @NotEmpty
     @Column(name = "LAST_NAME", nullable = false, length = 40)
     private String lastName;
+    
+    @NotEmpty
+    @Column(name = "JOB_STATUS", nullable = false, length = 40)
+    private Job jobStatus;
     
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern="dd-MM-yyyy")
