@@ -11,13 +11,15 @@ import javax.validation.constraints.NotNull;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 
 @Entity
 @Getter
 @ToString
 @Table(name = "AGENT")
-public class Agent {
+public class Agent implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,4 +65,7 @@ public class Agent {
     @JsonIgnore
     @OneToMany(mappedBy = "agent")
     private List<LoanRequest> loanRequestList;
+
+    @OneToMany(mappedBy = "agent")
+	private Set<QuestionAndAnswer> questionAndAnswer = new HashSet<QuestionAndAnswer>();
 }

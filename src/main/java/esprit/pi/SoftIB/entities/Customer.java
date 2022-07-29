@@ -11,14 +11,18 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import esprit.pi.SoftIB.enumeration.Job;
 import esprit.pi.SoftIB.enumeration.Sex;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Entity
 @Getter
 @ToString
 @Table(name = "CUSTOMER")
-public class Customer {
+public class Customer implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,4 +76,7 @@ public class Customer {
 
     @OneToOne
     private AccountRequest accountRequest;
+
+    @OneToMany(mappedBy = "customer")
+	private Set<QuestionAndAnswer> questionAndAnswer = new HashSet<QuestionAndAnswer>();
 }
