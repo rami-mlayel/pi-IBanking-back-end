@@ -33,11 +33,11 @@ public class QuestionAndAnswer {
     private boolean isAnswered;
 
     @ManyToOne
-    @JoinColumn(name = "idAgent", referencedColumnName = "id", insertable=false, updatable=false)
+    @JoinColumn(name = "idAgent", referencedColumnName = "id", updatable=false)
     private Agent agent;
 
     @ManyToOne
-    @JoinColumn(name = "idCustomer", referencedColumnName = "id", insertable=false, updatable=false)
+    @JoinColumn(name = "idCustomer", referencedColumnName = "id", updatable=false)
     private Customer customer;
 }
 

@@ -2,9 +2,7 @@ package esprit.pi.SoftIB.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import esprit.pi.SoftIB.enumeration.AccountType;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -14,9 +12,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
-@ToString
+@Data
 @Table(name = "ACCOUNT")
 public class Account {
 
@@ -35,7 +31,7 @@ public class Account {
 
     @NotEmpty
     @Column(name = "RIB", nullable = false, length = 40, unique = true)
-    private String RIB;
+    private String rib;
 
     @NotEmpty
     @Email
@@ -43,7 +39,7 @@ public class Account {
     private String email;
 
     @ManyToOne
-    @JoinColumn(name = "idUser", referencedColumnName = "id", insertable=false, updatable=false)
+    @JoinColumn(name = "idUser", referencedColumnName = "id", updatable=false)
     private User userAccount;
 
     @Enumerated(EnumType.STRING)

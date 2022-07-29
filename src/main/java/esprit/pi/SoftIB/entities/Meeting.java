@@ -1,15 +1,13 @@
 package esprit.pi.SoftIB.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Getter
-@ToString
+@Data
 @Table(name = "MEETING")
 public class Meeting {
 
@@ -32,11 +30,15 @@ public class Meeting {
     private boolean isConfirmed;
 
     @ManyToOne
-    @JoinColumn(name = "idAgent", referencedColumnName = "id", insertable=false, updatable=false)
+    @JoinColumn(name = "idAgent", referencedColumnName = "id", updatable=false)
     private Agent agent;
 
     @ManyToOne
-    @JoinColumn(name = "idCustomer", referencedColumnName = "id", insertable=false, updatable=false)
+    @JoinColumn(name = "idCustomer", referencedColumnName = "id", updatable=false)
     private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "idAccountRequest", referencedColumnName = "id", updatable=false)
+    private AccountRequest accountRequest;
 }
 

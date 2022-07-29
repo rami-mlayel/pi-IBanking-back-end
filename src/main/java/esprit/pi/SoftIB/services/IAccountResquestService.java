@@ -1,16 +1,24 @@
 package esprit.pi.SoftIB.services;
 
-import esprit.pi.SoftIB.entities.Account;
-import esprit.pi.SoftIB.entities.AccountRequest;
-import esprit.pi.SoftIB.entities.Meeting;
+import esprit.pi.SoftIB.dto.CustomerAccount;
+import esprit.pi.SoftIB.entities.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
+
 public interface IAccountResquestService {
+
     Long fillOutAccountReuqest(AccountRequest accountRequest);
-    List<Date> checkAvailibility(Date fromDate , Date toDate);
-    void fixUpAMeeting(Meeting meeting);
-    void approveAccountRequest (Account account);// create a new account using account request
+    Timesheet getLeastBusyTimeSheetByDay(Date preferedDate);
+    // changed to stream because of the enermous data size , the for was posing a performance issue
+    List<LocalDate> checkAvailibleDates(LocalDate startDate, LocalDate endDate);
+
+    void fixUpAMeeting(Meeting meeting) throws Exception;
+
+    void approveAccountRequest(CustomerAccount customerAccount);
+
     List<AccountRequest> getAlLAccountRequest();
+
 }

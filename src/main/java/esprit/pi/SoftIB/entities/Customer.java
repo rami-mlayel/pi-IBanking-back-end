@@ -1,5 +1,6 @@
 package esprit.pi.SoftIB.entities;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -19,8 +20,7 @@ import java.util.Set;
 
 
 @Entity
-@Getter
-@ToString
+@Data
 @Table(name = "CUSTOMER")
 public class Customer implements Serializable {
 
@@ -39,8 +39,7 @@ public class Customer implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "SEX", nullable = false, length = 40)
     private Sex sex;
-    
-    
+
     @NotEmpty
     @Column(name = "FIRST_NAME", nullable = false, length = 40)
     private String firstName;
@@ -53,7 +52,7 @@ public class Customer implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "JOB_STATUS", nullable = false, length = 40)
     private Job jobStatus;
-    
+
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern="dd-MM-yyyy")
     @Column(name = "BIRTH_DATE")
@@ -71,7 +70,7 @@ public class Customer implements Serializable {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "idAgency", referencedColumnName = "id", insertable=false, updatable=false)
+    @JoinColumn(name = "idAgency", referencedColumnName = "id", updatable=false)
     private Agency agencyCustomer;
 
     @OneToOne
