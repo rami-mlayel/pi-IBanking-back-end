@@ -8,7 +8,6 @@ import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import esprit.pi.SoftIB.enumeration.Housing;
 import esprit.pi.SoftIB.enumeration.Job;
 import esprit.pi.SoftIB.enumeration.Sex;
 
