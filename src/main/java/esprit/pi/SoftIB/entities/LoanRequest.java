@@ -47,11 +47,11 @@ public class LoanRequest {
     private boolean isApproved;
 
     @ManyToOne
-    @JoinColumn(name = "idAgent", referencedColumnName = "id", insertable=false, updatable=false)
+    @JoinColumn(name = "idAgent", referencedColumnName = "id", updatable=false)
     private Agent agent;
 
     @ManyToOne
-    @JoinColumn(name = "idAccount", referencedColumnName = "id", insertable=false, updatable=false)
+    @JoinColumn(name = "idAccount", referencedColumnName = "id", updatable=false)
     private Account account;
 
     @OneToOne

@@ -2,8 +2,8 @@ package esprit.pi.SoftIB.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -16,9 +16,8 @@ import java.util.Set;
 import java.util.HashSet;
 
 
+@Data
 @Entity
-@Getter
-@ToString
 @Table(name = "AGENT")
 public class Agent implements Serializable {
 
@@ -60,7 +59,7 @@ public class Agent implements Serializable {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "idAgency", referencedColumnName = "id", insertable=false, updatable=false)
+    @JoinColumn(name = "idAgency", referencedColumnName = "id", updatable=false)
     private Agency agencyAgent;
 
     @JsonIgnore
@@ -69,4 +68,9 @@ public class Agent implements Serializable {
 
     @OneToMany(mappedBy = "agent")
 	private Set<QuestionAndAnswer> questionAndAnswer = new HashSet<QuestionAndAnswer>();
+
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL ,mappedBy = "agent")
+    private List<Timesheet> timesheets;
 }
