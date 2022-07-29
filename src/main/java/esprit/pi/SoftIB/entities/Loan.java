@@ -45,4 +45,7 @@ public class Loan {
     @NotNull
     @Column(name = "INTEREST_RATE", nullable = false)
     private BigDecimal interestRate;
+
+    @OneToOne(mappedBy = "loan")
+    private LoanRequest loanRequest;
 }

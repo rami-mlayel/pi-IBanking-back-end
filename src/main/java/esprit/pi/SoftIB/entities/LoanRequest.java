@@ -34,8 +34,8 @@ public class LoanRequest {
     private BigDecimal sum;
 
     @NotEmpty
-    @Column(name = "PERIOD")
-    private String period;
+    @Column(name = "MONTH_DURATION")
+    private int monthDuration;
 
     @Column(name = "IS_APPROVED")
     private boolean isApproved;
@@ -47,4 +47,7 @@ public class LoanRequest {
     @ManyToOne
     @JoinColumn(name = "idAccount", referencedColumnName = "id", insertable=false, updatable=false)
     private Account account;
+
+    @OneToOne
+    private Loan loan;
 }

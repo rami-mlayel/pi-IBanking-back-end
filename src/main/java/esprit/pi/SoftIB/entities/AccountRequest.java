@@ -1,6 +1,7 @@
 package esprit.pi.SoftIB.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import esprit.pi.SoftIB.enumeration.Job;
 import esprit.pi.SoftIB.enumeration.State;
 import lombok.Getter;
 import lombok.ToString;
@@ -45,8 +46,9 @@ public class AccountRequest {
     private String email;
 
     @NotEmpty
-    @Column(name = "JOB", unique = true, nullable = false, length = 8)
-    private String job;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "JOB", nullable = false, length = 8)
+    private Job job;
 
     @Column(name = "SALARY", nullable = false)
     private BigDecimal salary;
