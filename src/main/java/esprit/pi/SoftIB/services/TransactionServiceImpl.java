@@ -4,6 +4,7 @@ import esprit.pi.SoftIB.entities.Account;
 import esprit.pi.SoftIB.entities.Transaction;
 import esprit.pi.SoftIB.enumeration.TransactionStatus;
 import esprit.pi.SoftIB.enumeration.TransactionType;
+import esprit.pi.SoftIB.repository.AccountRepository;
 import esprit.pi.SoftIB.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,9 @@ public class TransactionServiceImpl implements ITransactionService {
 
     @Autowired
     TransactionRepository transactionRepository;
+
+    @Autowired
+    AccountRepository accountRepository;
 
     @Override
     public Optional<Transaction> getTransactionById(long id) {
@@ -49,7 +53,7 @@ public class TransactionServiceImpl implements ITransactionService {
             transaction.setTransactionStatus(TransactionStatus.COMPLETED);
         }
         transactionRepository.save(transaction);
-        //save account
+        accountRepository.save(account);
         return transaction;
     }
 
@@ -68,7 +72,7 @@ public class TransactionServiceImpl implements ITransactionService {
         account.setBalance(account.getBalance().add(amount));
         transaction.setTransactionStatus(TransactionStatus.COMPLETED);
         transactionRepository.save(transaction);
-        //save account
+        accountRepository.save(account);
         return transaction;
     }
 
@@ -86,7 +90,7 @@ public class TransactionServiceImpl implements ITransactionService {
         account.setBalance(account.getBalance().add(amount));
         transaction.setTransactionStatus(TransactionStatus.COMPLETED);
         transactionRepository.save(transaction);
-        //save account
+        accountRepository.save(account);
         return transaction;
     }
 
@@ -122,6 +126,8 @@ public class TransactionServiceImpl implements ITransactionService {
 
         transactionRepository.save(transaction);
         //save account
+        accountRepository.save(sender);
+        accountRepository.save(receiver);
 
         return transaction;
 
