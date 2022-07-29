@@ -37,9 +37,6 @@ public class Customer {
     @Column(name = "SEX", nullable = false, length = 40)
     private Sex sex;
     
-    @NotEmpty
-    @Column(name = "HOUSING", nullable = false, length = 40)
-    private Housing housing;
     
     @NotEmpty
     @Column(name = "FIRST_NAME", nullable = false, length = 40)
