@@ -1,7 +1,6 @@
 package esprit.pi.SoftIB.services;
 
 import esprit.pi.SoftIB.entities.Account;
-import esprit.pi.SoftIB.entities.Loan;
 import esprit.pi.SoftIB.entities.Transaction;
 import esprit.pi.SoftIB.enumeration.TransactionStatus;
 import esprit.pi.SoftIB.enumeration.TransactionType;
