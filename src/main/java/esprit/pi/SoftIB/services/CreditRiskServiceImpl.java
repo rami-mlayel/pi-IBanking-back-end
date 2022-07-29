@@ -149,9 +149,13 @@ public class CreditRiskServiceImpl implements ICreditRiskService {
 			if(purpose==LoanType.CAR) {recordList.add("car");}
 			if(purpose==LoanType.PERSONAL) {recordList.add("vacation/others");}
 			if(purpose==LoanType.MORTGAGE) {recordList.add("business");}
-			if(loanRequest.isApproved()) {recordList.add("good");}
-			if(!(loanRequest.isApproved())) {recordList.add("bad");}
-			csvWriter.writeNext(recordList.toArray(record));
+			if(loanRequest.getLoanRequestStatus().equals("APPROVED")) {
+			    recordList.add("good");
+                csvWriter.writeNext(recordList.toArray(record));
+			}
+			if(!(loanRequest.getLoanRequestStatus().equals("REFUSED"))) {
+			    recordList.add("bad");
+                csvWriter.writeNext(recordList.toArray(record));}
 			}
     byte[] byteData = Files.readAllBytes(Paths.get("c:\\test\\data.csv"));
     String base64String = Base64.getEncoder().encodeToString(byteData);
