@@ -1,6 +1,5 @@
 package esprit.pi.SoftIB.services;
 
-import esprit.pi.SoftIB.entities.Loan;
 import esprit.pi.SoftIB.entities.Transaction;
 
 import java.math.BigDecimal;
