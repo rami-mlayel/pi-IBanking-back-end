@@ -8,7 +8,9 @@ import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import esprit.pi.SoftIB.enumeration.Housing;
 import esprit.pi.SoftIB.enumeration.Job;
+import esprit.pi.SoftIB.enumeration.Sex;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -30,6 +32,14 @@ public class Customer {
 
     @Column(name = "SALARY", nullable = false)
     private BigDecimal salary;
+    
+    @NotEmpty
+    @Column(name = "SEX", nullable = false, length = 40)
+    private Sex sex;
+    
+    @NotEmpty
+    @Column(name = "HOUSING", nullable = false, length = 40)
+    private Housing housing;
     
     @NotEmpty
     @Column(name = "FIRST_NAME", nullable = false, length = 40)
