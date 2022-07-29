@@ -46,6 +46,7 @@ public class Customer {
     private String lastName;
     
     @NotEmpty
+    @Enumerated(EnumType.STRING)
     @Column(name = "JOB_STATUS", nullable = false, length = 40)
     private Job jobStatus;
     
