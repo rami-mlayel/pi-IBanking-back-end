@@ -2,22 +2,24 @@ package esprit.pi.SoftIB.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 
+@Data
 @Entity
-@Getter
-@ToString
 @Table(name = "AGENT")
-public class Agent {
+public class Agent implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,10 +59,18 @@ public class Agent {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "idAgency", referencedColumnName = "id", insertable=false, updatable=false)
+    @JoinColumn(name = "idAgency", referencedColumnName = "id", updatable=false)
     private Agency agencyAgent;
 
     @JsonIgnore
     @OneToMany(mappedBy = "agent")
     private List<LoanRequest> loanRequestList;
+
+    @OneToMany(mappedBy = "agent")
+	private Set<QuestionAndAnswer> questionAndAnswer = new HashSet<QuestionAndAnswer>();
+
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL ,mappedBy = "agent")
+    private List<Timesheet> timesheets;
 }

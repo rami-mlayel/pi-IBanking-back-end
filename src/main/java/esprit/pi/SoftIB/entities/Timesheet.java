@@ -2,17 +2,18 @@ package esprit.pi.SoftIB.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import lombok.Getter;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
+@Data
 @Entity
-@Getter
-@ToString
 @Table(name = "TIMESHEET")
 public class Timesheet {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
@@ -20,25 +21,15 @@ public class Timesheet {
 
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern="dd-MM-yyyy")
-    @Column(name = "TO_DATE")
-    private Date toDate;
+    @Column(name = "DATE")
+    private Date date;
 
-    @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern="dd-MM-yyyy")
-    @Column(name = "FROM_DATE")
-    private Date fromDate;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL ,mappedBy = "timesheet")
+    private List<TimeSlot> timeSlots ;
 
-    @Temporal(TemporalType.TIME)
-    @JsonFormat(pattern="HH:MM")
-    @Column(name = "TO_TIME", nullable = false)
-    private Date toTtime;
-
-    @Temporal(TemporalType.TIME)
-    @JsonFormat(pattern="HH:MM")
-    @Column(name = "FROM_TIME", nullable = false)
-    private Date fromTime;
 
     @ManyToOne
-    @JoinColumn(name = "idAgent", referencedColumnName = "id", insertable=false, updatable=false)
+    @JoinColumn(name = "idAgent", referencedColumnName = "id", updatable=false)
     private Agent agent;
 }

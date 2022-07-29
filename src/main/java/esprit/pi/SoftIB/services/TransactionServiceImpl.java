@@ -102,10 +102,10 @@ public class TransactionServiceImpl implements ITransactionService {
         return null;
     }
 
-
     @Override
     @Transactional
     public Transaction transferMoney(String senderAccountNumber, String receiverAccountNumber, BigDecimal amount) {
+
 
         Account sender = accountRepository.findByAccountNumber(senderAccountNumber);
         Account receiver = accountRepository.findByAccountNumber(receiverAccountNumber);

@@ -3,6 +3,7 @@ package esprit.pi.SoftIB.entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import esprit.pi.SoftIB.enumeration.Job;
 import esprit.pi.SoftIB.enumeration.State;
+import lombok.Data;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -13,14 +14,14 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-@Getter
-@ToString
+@Data
 @Table(name = "ACCOUNT_REQUEST")
 public class AccountRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     @NotEmpty
@@ -45,7 +46,6 @@ public class AccountRequest {
     @Column(name = "EMAIL", unique = true)
     private String email;
 
-    @NotEmpty
     @Enumerated(EnumType.STRING)
     @Column(name = "JOB", nullable = false, length = 8)
     private Job job;
