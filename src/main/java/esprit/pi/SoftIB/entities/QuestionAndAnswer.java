@@ -1,17 +1,12 @@
 package esprit.pi.SoftIB.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import esprit.pi.SoftIB.enumeration.QuestionType;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
 
 import javax.persistence.*;
-import java.awt.*;
-import java.util.Date;
 
 @Entity
-@Getter
-@ToString
+@Data
 @Table(name = "QUESTION_AND_ANSWER")
 public class QuestionAndAnswer {
 

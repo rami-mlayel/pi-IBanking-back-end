@@ -2,12 +2,12 @@ package esprit.pi.SoftIB.entities;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import esprit.pi.SoftIB.enumeration.Housing;
+import esprit.pi.SoftIB.enumeration.LoanRequestStatus;
 import esprit.pi.SoftIB.enumeration.LoanType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -43,8 +43,9 @@ public class LoanRequest {
     @Column(name = "MONTH_DURATION")
     private int monthDuration;
 
-    @Column(name = "IS_APPROVED", columnDefinition = "boolean default false")
-    private boolean isApproved;
+    @Column(length = 32, name = "LOAN_REQUEST_STATUS", columnDefinition = "varchar(32) default 'WAITING'")
+    @Enumerated(value = EnumType.STRING)
+    private LoanRequestStatus loanRequestStatus = LoanRequestStatus.WAITING;
 
     @ManyToOne
     @JoinColumn(name = "idAgent", referencedColumnName = "id", updatable=false)
