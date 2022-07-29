@@ -12,8 +12,6 @@ public interface ITransactionService {
 
     Optional<Transaction> getTransactionById(long id);
 
-    void generateLoanBills(Loan loan);
-
     Transaction retrieveMoney(String accountNumber, BigDecimal amount);
 
     Transaction depositMoney(String accountNumber, BigDecimal amount);
