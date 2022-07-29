@@ -1,5 +1,6 @@
 package esprit.pi.SoftIB.entities;
 
+import esprit.pi.SoftIB.enumeration.Housing;
 import esprit.pi.SoftIB.enumeration.LoanType;
 import lombok.Getter;
 import lombok.ToString;
@@ -24,6 +25,10 @@ public class LoanRequest {
     @NotEmpty
     @Column(name = "PURPOSE", nullable = false, length = 40)
     private LoanType purpose;
+    
+    @NotEmpty
+    @Column(name = "HOUSING", nullable = false, length = 40)
+    private Housing housing;
 
     @NotEmpty
     @Column(name = "DETAIL", nullable = false, length = 40)

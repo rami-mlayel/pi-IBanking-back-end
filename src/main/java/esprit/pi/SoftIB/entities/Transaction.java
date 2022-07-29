@@ -3,9 +3,7 @@ package esprit.pi.SoftIB.entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import esprit.pi.SoftIB.enumeration.TransactionStatus;
 import esprit.pi.SoftIB.enumeration.TransactionType;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -14,13 +12,11 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-@Getter
-@Setter
-@ToString
+@Data
 @Table(name = "TRANSACTION")
 public class Transaction {
 
-
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
