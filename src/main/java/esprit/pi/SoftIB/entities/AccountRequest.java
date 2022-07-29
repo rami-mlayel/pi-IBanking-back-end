@@ -21,7 +21,6 @@ public class AccountRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     @NotEmpty

@@ -10,4 +10,6 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
 
     @Query(value = "SELECT * FROM ACCOUNT WHERE ACCOUNT_NUMBER = ?1", nativeQuery = true)
     Account findByAccountNumber(String accountNumber);
+
+    Account findByEmail(String email);
 }

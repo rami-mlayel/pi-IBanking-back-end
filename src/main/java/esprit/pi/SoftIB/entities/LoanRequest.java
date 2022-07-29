@@ -6,6 +6,7 @@ import esprit.pi.SoftIB.enumeration.LoanRequestStatus;
 import esprit.pi.SoftIB.enumeration.LoanType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Data
+@NoArgsConstructor
 @AllArgsConstructor(onConstructor = @__({ @JsonCreator}))
 @Table(name = "LOAN_REQUEST")
 public class LoanRequest {

@@ -2,6 +2,7 @@ package esprit.pi.SoftIB.filters;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -44,5 +45,10 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication (usernamePasswordAuthenticationToken) ;
         }
         chain.doFilter(request, response);
+    }
+
+    public String getUserName() {
+        Authentication authenticationToken = SecurityContextHolder.getContext().getAuthentication();
+        return authenticationToken.getName();
     }
 }

@@ -70,7 +70,7 @@ public class AccountRequestServiceImpl implements IAccountResquestService {
     }
     @Override
     public void fixUpAMeeting(Meeting meeting) throws Exception {
-        Agent availableAgent =  agentRepository.findAgentByTimeSheetDate(meeting.getDate());
+        Agent availableAgent =  agentRepository.findAgentWithTimeSheetDate(meeting.getDate());
 
         if(availableAgent!=null) {
             Timesheet timesheet = new Timesheet();
