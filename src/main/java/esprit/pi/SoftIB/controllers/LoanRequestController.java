@@ -19,7 +19,7 @@ public class LoanRequestController {
 
     @PostMapping(value = "/request/add")
     @ResponseBody
-    //@PreAuthorize("hasRole('ROLE_CUSTOMER')")
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     public ResponseEntity addLoanRequest(@RequestBody LoanRequest loanRequest) {
         try {
             return ResponseEntity.ok(loanRequestService.addLoanRequest(loanRequest));
@@ -27,6 +27,19 @@ public class LoanRequestController {
             log.info("There was an error: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Couldn't submit please try again or contact your agency");
+        }
+    }
+
+    @GetMapping(value = "/request/get-all")
+    @ResponseBody
+    @PreAuthorize("hasRole('ROLE_CUSTOMER')")
+    public ResponseEntity consultLoanRequest() {
+        try {
+            return ResponseEntity.ok(loanRequestService.getAllLoanRequest());
+        } catch (Exception e) {
+            log.info("There was an error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Couldn't get loan request please try again or contact your agency");
         }
     }
 }
