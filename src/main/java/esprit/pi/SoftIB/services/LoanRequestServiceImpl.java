@@ -2,6 +2,7 @@ package esprit.pi.SoftIB.services;
 
 import esprit.pi.SoftIB.entities.Account;
 import esprit.pi.SoftIB.entities.User;
+import esprit.pi.SoftIB.enumeration.LoanRequestStatus;
 import esprit.pi.SoftIB.filters.JWTAuthenticationFilter;
 import esprit.pi.SoftIB.repository.AccountRepository;
 import esprit.pi.SoftIB.repository.LoanRequestRepository;
@@ -26,9 +27,10 @@ public class LoanRequestServiceImpl {
     @Autowired
     private AccountRepository accountRepository;
 
-    public String addLoanRequest(LoanRequest loanRequest) throws Exception {
-            LoanRequest loanRequestObject = loanRequestRepository.save(loanRequest);
-            return "Loan request submitted successfully with ID: " + loanRequestObject.getId();
+    public String addLoanRequest(LoanRequest loanRequest) {
+        loanRequest.setLoanRequestStatus(LoanRequestStatus.WAITING);
+        LoanRequest loanRequestObject = loanRequestRepository.save(loanRequest);
+        return "Loan request submitted successfully with ID: " + loanRequestObject.getId();
     }
 
     public List<LoanRequest> getAllLoanRequest() {
@@ -36,4 +38,12 @@ public class LoanRequestServiceImpl {
         Account account = accountRepository.findByEmail(user.getEmail());
         return loanRequestRepository.findByAccount(account);
     }
+
+    public String cancelLoanRequest(Long id) {
+        LoanRequest loanRequest = loanRequestRepository.findById(id).get();
+        loanRequest.setLoanRequestStatus(LoanRequestStatus.CANCELED);
+        loanRequestRepository.save(loanRequest);
+        return "Loan request has been canceled successfully";
+    }
+
 }
