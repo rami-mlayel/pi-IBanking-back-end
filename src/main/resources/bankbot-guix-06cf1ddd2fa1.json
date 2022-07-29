@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "bankbot-guix",
+  "private_key_id": "06cf1ddd2fa1590e32d5c4704dc298569bdc68aa",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDYFIJulf54n297\nn0eJ+nd4gJmeP/H4KiK7mv8NgtF5DgbFkygEjmPgc+i9gwrDQUlvQUdrDltqdjoD\nMdk1VIaawCCY8W67XovAYvBmMFw+RNkqFR+/jIXSHfwiEoAN/Kvs43TnIyy/2H6H\n7R6Ytmxs1qwFkaD3QZtI0csgdv3P3lwoARbA4EMvORYFRcCUZ9rslNu2tl5JYLzR\ns1JLotT9sbqCTKBNFJsB5VTyydbnjJ0jczFAnLgDECOgWHWKPqqu07mygkPTE6Dx\nmxoedgtcWHWdmjtmQ9I0rYl6rC+368QOd2WqBrlCurqVju3upi4nGsBVJ1QO9t85\n7ULtdTnXAgMBAAECggEADZ1dNTKQ53DESXnDvCyNPTPSehIgC47mxANZcV8owQPi\nkVha+86CTzDTx/0Vvy/B52ypif6hlpepwsHFTy2VkvKVcI2QeJCAew1rhZojyxie\nG59bx2nx6fH8Yk6Kxawso68WkpRjdsMMAJcu3QMW2dS831efA3VIH30jMKx5WZDU\nxuik7b7W9n3Lh6ndrReeJorjt+wLe0VEMhvRZqRqYi4XbgRdqG2UFetScXdzy8/+\ngClY9agnmXuuGF/GO5mAmYbDa/2ifVOsVyh+AQAsZUbPHVajdBtaAGJyBU6nYwHq\n5VnxCftgQJLoa9wRouFSvdBNHWQva+tVi5SolRjvgQKBgQD7SKoMIBW8Df8MZiA2\n3xzsfgmHPwyDpr586T+SIKhO3z0s0AG6JrXZEkQHvBT1tTLYm6pitGR3R2mBmInN\nZgD0o0d9t2Gnr04dK1QSCOIeKT5ch6GxKbhNMO29aRlkmpkAXFNsFpZJkepkenCP\nXCmUkYubLBG+STXBlsHTlfQPxwKBgQDcIrP2T4zRsJiPBzZmegcIAV4jxXY6ZhRv\n49KCmTfLZJrO6LIpjT9Qjoph1HiKslKD9nn2NDMh9uFuSBWALDFh38byfYAYMfAQ\nc+VWWqE7JDCOs+jJDcAgWbBF7P7e2aBDyFMGpBxlsR0mKBDiuqRCWRxlXZNtQyUg\ng963OvmlcQKBgH+9vNRVKzdiVhnTgOTkHywKFoXug0oZ5hRR7sM2XtlZmxvA0l/z\nddZX9sWH04/lAWgkGkX7Nmd8oiIDjWohRLMYnitGohpAgBFMCXzxjyGODemz+Xq6\nnrp++Ryk5QfDn6wTQ0VbZiMYTnOt2rLGQ00HgFTt3kdBqFY1cWtCe8PZAoGBANHs\nohNUfySENKfIp/8HhWcD7uNL7df4+qpM5rW2KTfj46FG1Ie9c9B9bcenV6BkNz4y\nsNGxq8VK6mVBhodpHVqJjO438gygqp719pDn8nM0qr2bIXWBkGMJRIkaXV7kx+l7\nwnlFzPLI+NQnRxsAA55l3idoGiwK6P/d4Wh4bBNxAoGBAM/veNF2CMOU8epRVMxC\nT7yN7pvQNve9pu/wPUmOQ56zSp4C1+5F2qW0N9MIonSjAaC+C6iJQ4RSffepoglT\nryAfUYw5WxALGhLUQ+oGzFYU0Fplsi2ISgfxUg0hluniLvZIcqch2bdr13iFpFft\nFzfSr3fx0hqlz0Fh4tNPO+Zv\n-----END PRIVATE KEY-----\n",
+  "client_email": "myaccount@bankbot-guix.iam.gserviceaccount.com",
+  "client_id": "102972284869047435553",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/myaccount%40bankbot-guix.iam.gserviceaccount.com"
+}
