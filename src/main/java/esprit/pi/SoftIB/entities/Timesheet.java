@@ -14,6 +14,7 @@ import java.util.Date;
 @Table(name = "TIMESHEET")
 public class Timesheet {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
 

@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 public class LoanRequest {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
 
