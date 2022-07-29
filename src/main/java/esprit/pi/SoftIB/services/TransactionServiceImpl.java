@@ -34,16 +34,6 @@ public class TransactionServiceImpl implements ITransactionService {
     }
 
     @Override
-    public void generateLoanBills(Loan loan){
-
-        for (int i = 1; i <= loan.getLoanRequest().getMonthDuration(); i++) {
-
-
-        }
-
-    }
-
-    @Override
     @Transactional
     public Transaction retrieveMoney(String accountNumber, BigDecimal amount) {
 
