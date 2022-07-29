@@ -35,8 +35,8 @@ public class Customer implements Serializable {
 
     @Column(name = "SALARY", nullable = false)
     private BigDecimal salary;
-    
-    @NotEmpty
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "SEX", nullable = false, length = 40)
     private Sex sex;
     

@@ -45,7 +45,6 @@ public class AccountRequest {
     @Column(name = "EMAIL", unique = true)
     private String email;
 
-    @NotEmpty
     @Enumerated(EnumType.STRING)
     @Column(name = "JOB", nullable = false, length = 8)
     private Job job;

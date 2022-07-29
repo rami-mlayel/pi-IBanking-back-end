@@ -1,19 +1,20 @@
 package esprit.pi.SoftIB.entities;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import esprit.pi.SoftIB.enumeration.Housing;
 import esprit.pi.SoftIB.enumeration.LoanType;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.awt.*;
 import java.math.BigDecimal;
 
 @Entity
-@Getter
-@ToString
+@Data
+@AllArgsConstructor(onConstructor = @__({ @JsonCreator}))
 @Table(name = "LOAN_REQUEST")
 public class LoanRequest {
 
@@ -22,27 +23,27 @@ public class LoanRequest {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @NotEmpty
+    @Enumerated(EnumType.STRING)
     @Column(name = "PURPOSE", nullable = false, length = 40)
     private LoanType purpose;
-    
-    @NotEmpty
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "HOUSING", nullable = false, length = 40)
     private Housing housing;
 
     @NotEmpty
-    @Column(name = "DETAIL", nullable = false, length = 40)
-    private TextArea detail;
+    @Column(name = "DETAIL", nullable = false, length = 250)
+    private String detail;
 
     @NotNull
     @Column(name = "SUM")
     private BigDecimal sum;
 
-    @NotEmpty
+    @NotNull
     @Column(name = "MONTH_DURATION")
     private int monthDuration;
 
-    @Column(name = "IS_APPROVED")
+    @Column(name = "IS_APPROVED", columnDefinition = "boolean default false")
     private boolean isApproved;
 
     @ManyToOne

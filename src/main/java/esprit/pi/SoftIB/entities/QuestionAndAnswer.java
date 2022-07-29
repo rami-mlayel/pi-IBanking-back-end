@@ -23,8 +23,8 @@ public class QuestionAndAnswer {
     @Column(name = "TITLE")
     private String title;
 
-    @Column(name = "CONTENT", nullable = false)
-    private TextArea content;
+    @Column(name = "CONTENT", nullable = false, length = 255)
+    private String content;
 
     @Column(name = "TYPE", nullable = false)
     private QuestionType type;

@@ -17,6 +17,5 @@ update users set agent_id = 2 where id = 2;
 insert into account_request (birth_date, email, first_name, is_approved, job, last_name, phone_number, prefered_date, referrence, salary, state) values ('1996-08-06', 'customer@customer.com', 'customer1', true, 'RESIDENT', 'first', '54968723', null, false, '2000', 'Tunis');
 insert into users (username, email, password) values ('customer', 'customer@customer.com', 'password');
 insert into user_roles values (3,3);
-insert into customer (birth_date, cin, first_name, job_status, last_name, personal_address, phone_number, salary, account_request_id, id_agency) values ('1996-08-06', '03561485', 'customer1', 'RESIDENT', 'first', 'in home', '54968723', '2000', '1', '1');
-
-
+insert into customer (birth_date, cin, first_name, job_status, last_name, personal_address, phone_number, salary, account_request_id, id_agency, sex) values ('1996-08-06', '03561485', 'customer1', 'RESIDENT', 'first', 'in home', '54968723', '2000', '1', '1', 'MALE');
+insert into account(rib, account_number, balance, email, type, id_user) values ('1472583690','1','0','customer@customer.com','CURRENT_ACCOUNT','3')
