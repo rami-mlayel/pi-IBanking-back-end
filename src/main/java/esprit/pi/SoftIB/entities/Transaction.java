@@ -7,7 +7,6 @@ import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -21,7 +20,6 @@ public class Transaction {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @NotEmpty
     @Column(name = "AMOUNT", nullable = false, length = 40)
     private BigDecimal amount;
 
@@ -35,15 +33,14 @@ public class Transaction {
     @Column(name = "TRANSACTION_DATE_TIME", nullable = false)
     private Date transactionDateTime;
 
-    @NotEmpty
+    @Enumerated(EnumType.STRING)
     @Column(name = "TRANSACTION_TYPE")
     private TransactionType transactionType;
 
-    @NotEmpty
+    @Enumerated(EnumType.STRING)
     @Column(name = "TRANSACTION_STATUS")
     private TransactionStatus transactionStatus;
 
-    @NotEmpty
     @Column(name = "COMMISSION_RATE")
     private BigDecimal commissionRate;
 

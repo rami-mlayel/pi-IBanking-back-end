@@ -17,7 +17,7 @@ public interface ITransactionService {
 
     Transaction depositCheck(String accountNumber, BigDecimal amount);
 
-    Transaction sendMoney(String senderAccountNumber, String receiverAccountNumber, BigDecimal amount);
+    Transaction transferMoney(String senderAccountNumber, String receiverAccountNumber, BigDecimal amount);
 
     List<Transaction> getAllTransaction(String type, String senderAccountNumber, String receiverAccountNumber);
 
