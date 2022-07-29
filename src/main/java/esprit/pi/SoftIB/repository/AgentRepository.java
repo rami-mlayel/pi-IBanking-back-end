@@ -14,6 +14,7 @@ import java.util.List;
 public interface AgentRepository extends CrudRepository<Agent, Long> {
 
 
-    @Query(value = "from Agent where date = :preferedDate")
+    @Query(value = "SELECT A.* FROM agent A , timesheet T WHERE A.id = T.id_agent and T.date=:preferedDate",nativeQuery = true)
     Agent findAgentWithTimeSheetDate(@Param("preferedDate") Date preferedDate);
+
 }
