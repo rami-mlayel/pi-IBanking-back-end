@@ -14,6 +14,6 @@ import java.util.List;
 public interface AgentRepository extends CrudRepository<Agent, Long> {
 
 
-    //@Query(value = "from Agent where date = :preferedDate")
-    Agent findAgentByTimeSheetDate(@Param("preferedDate") Date preferedDate);
+    @Query(value = "from Agent where date = :preferedDate")
+    Agent findAgentWithTimeSheetDate(@Param("preferedDate") Date preferedDate);
 }
