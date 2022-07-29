@@ -1,5 +1,6 @@
 package esprit.pi.SoftIB.services;
 
+import esprit.pi.SoftIB.entities.Loan;
 import esprit.pi.SoftIB.entities.Transaction;
 
 import java.math.BigDecimal;
@@ -11,13 +12,15 @@ public interface ITransactionService {
 
     Optional<Transaction> getTransactionById(long id);
 
+    void generateLoanBills(Loan loan);
+
     Transaction retrieveMoney(String accountNumber, BigDecimal amount);
 
     Transaction depositMoney(String accountNumber, BigDecimal amount);
 
     Transaction depositCheck(String accountNumber, BigDecimal amount);
 
-    Transaction sendMoney(String senderAccountNumber, String receiverAccountNumber, BigDecimal amount);
+    Transaction transferMoney(String senderAccountNumber, String receiverAccountNumber, BigDecimal amount);
 
     List<Transaction> getAllTransaction(String type, String senderAccountNumber, String receiverAccountNumber);
 

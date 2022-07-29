@@ -1,6 +1,7 @@
 package esprit.pi.SoftIB.services;
 
 import esprit.pi.SoftIB.entities.Account;
+import esprit.pi.SoftIB.entities.Loan;
 import esprit.pi.SoftIB.entities.Transaction;
 import esprit.pi.SoftIB.enumeration.TransactionStatus;
 import esprit.pi.SoftIB.enumeration.TransactionType;
@@ -30,6 +31,16 @@ public class TransactionServiceImpl implements ITransactionService {
     @Override
     public Optional<Transaction> getTransactionById(long id) {
         return transactionRepository.findById(id);
+    }
+
+    @Override
+    public void generateLoanBills(Loan loan){
+
+        for (int i = 1; i <= loan.getLoanRequest().getMonthDuration(); i++) {
+
+
+        }
+
     }
 
     @Override
@@ -104,7 +115,7 @@ public class TransactionServiceImpl implements ITransactionService {
 
     @Override
     @Transactional
-    public Transaction sendMoney(String senderAccountNumber, String receiverAccountNumber, BigDecimal amount) {
+    public Transaction transferMoney(String senderAccountNumber, String receiverAccountNumber, BigDecimal amount) {
 
         Account sender = accountRepository.findByAccountNumber(senderAccountNumber);
         Account receiver = accountRepository.findByAccountNumber(receiverAccountNumber);
