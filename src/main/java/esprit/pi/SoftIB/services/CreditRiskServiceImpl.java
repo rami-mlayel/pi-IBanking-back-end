@@ -39,8 +39,16 @@ public class CreditRiskServiceImpl implements ICreditRiskService {
 		if(creditRisk.getHousing()==Housing.FREE) {	predictionData.add(0);}
 		if(creditRisk.getHousing()==Housing.RENT) {	predictionData.add(1);}
 		if(creditRisk.getHousing()==Housing.OWN) {	predictionData.add(2);}
-		predictionData.add(Math.round(creditRisk.getSaving()));
-		predictionData.add(Math.round(creditRisk.getCurrent()));
+		//predictionData.add(Math.round(creditRisk.getSaving()));
+		if(creditRisk.getSaving()<1000) {	predictionData.add(0);}
+		if(creditRisk.getSaving()>=1000 && creditRisk.getSaving()<10000 ) {	predictionData.add(1);}
+		if(creditRisk.getSaving()>=10000 && creditRisk.getSaving()<20000 ) {	predictionData.add(2);}
+		if(creditRisk.getSaving()>=20000) {	predictionData.add(3);}
+		if(creditRisk.getCurrent()<1000) {	predictionData.add(0);}
+		if(creditRisk.getCurrent()>=1000 && creditRisk.getCurrent()<10000 ) {	predictionData.add(1);}
+		if(creditRisk.getCurrent()>=10000 && creditRisk.getCurrent()<20000 ) {	predictionData.add(2);}
+		if(creditRisk.getCurrent()>=20000) {	predictionData.add(3);}
+		//predictionData.add(Math.round(creditRisk.getCurrent()));
 		predictionData.add(Math.round(creditRisk.getAmount()));
 		predictionData.add(creditRisk.getDuration());
 		if(creditRisk.getPurpose()==LoanType.PERSONAL) {predictionData.add(7);}
