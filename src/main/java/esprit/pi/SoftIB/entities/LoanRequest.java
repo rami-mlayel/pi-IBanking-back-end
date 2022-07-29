@@ -49,7 +49,7 @@ public class LoanRequest {
     @Enumerated(value = EnumType.STRING)
     private LoanRequestStatus loanRequestStatus = LoanRequestStatus.WAITING;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idAgent", referencedColumnName = "id", updatable=false)
     private Agent agent;
 

@@ -3,11 +3,16 @@ package esprit.pi.SoftIB.services;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.Period;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.time.ZoneId;
@@ -18,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.opencsv.CSVWriter;
 
 import esprit.pi.SoftIB.entities.Account;
 import esprit.pi.SoftIB.entities.CreditRisk;
@@ -101,6 +107,55 @@ public class CreditRiskServiceImpl implements ICreditRiskService {
 		risk.setDuration(loanRequest.getMonthDuration());
 		risk.setPurpose(loanRequest.getPurpose());
 		return this.getRisk(risk);
+	}
+	@Override
+	public String generateTrainingData() throws IOException {
+		CSVWriter csvWriter = new CSVWriter(new FileWriter("c:\\test\\data.csv"));
+        String[] header = { "Age", "Sex", "Job", "Housing", "Saving accounts", "Checking account", "Credit amount", "Duration", "Purpose", "Risk" };
+        csvWriter.writeNext(header);
+		List<LoanRequest> requests= loanRequestRepository.findAll();
+		for(LoanRequest loanRequest : requests) {
+			String[] record= new String[10];
+			List<String> recordList= new ArrayList<>();			
+			Date userBD=loanRequest.getAccount().getUserAccount().getCustomer().getBirthDate();
+			LocalDate today= LocalDate.now();
+			LocalDate date= userBD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			recordList.add(((Integer) Period.between(date, today).getYears()).toString());
+			recordList.add(loanRequest.getAccount().getUserAccount().getCustomer().getSex().toString().toLowerCase());
+			Job job=loanRequest.getAccount().getUserAccount().getCustomer().getJobStatus();
+			if(job==Job.NONRESIDENT) {recordList.add("0");}
+			if(job==Job.RESIDENT) {recordList.add("1");}
+			if(job==Job.EXPERIMENTEDRESIDENT) {recordList.add("2");}
+			if(job==Job.OWNER) {recordList.add("3");}
+			recordList.add(loanRequest.getHousing().toString().toLowerCase());
+			List<Account> accounts =loanRequest.getAccount().getUserAccount().getCustomer().getUser().getAccounts() ;
+			Float savings=0F;
+			Float currents=0F;
+			for(Account account : accounts) {
+				if( account.getType()==AccountType.SAVING_ACCOUNT) {savings=savings+account.getBalance().floatValue();}
+				if( account.getType()==AccountType.CURRENT_ACCOUNT) {currents=currents+account.getBalance().floatValue();}
+			}
+			if(savings<1000) {	recordList.add("little");}
+			if(savings>=1000 && savings<10000 ) {	recordList.add("moderate");}
+			if(savings>=10000 && savings<20000 ) {	recordList.add("quite rich");}
+			if(savings>=20000) {	recordList.add("rich");}
+			if(currents<1000) {	recordList.add("little");}
+			if(currents>=1000 && currents<10000 ) {	recordList.add("moderate");}
+			if(currents>=10000 && currents<20000 ) {	recordList.add("quite rich");}
+			if(currents>=20000) {	recordList.add("rich");}
+			recordList.add(loanRequest.getSum().toString());
+			recordList.add(( (Integer) loanRequest.getMonthDuration()).toString());
+			LoanType purpose=loanRequest.getPurpose();
+			if(purpose==LoanType.CAR) {recordList.add("car");}
+			if(purpose==LoanType.PERSONAL) {recordList.add("vacation/others");}
+			if(purpose==LoanType.MORTGAGE) {recordList.add("business");}
+			if(loanRequest.isApproved()) {recordList.add("good");}
+			if(!(loanRequest.isApproved())) {recordList.add("bad");}
+			csvWriter.writeNext(recordList.toArray(record));
+			}
+    byte[] byteData = Files.readAllBytes(Paths.get("c:\\test\\data.csv"));
+    String base64String = Base64.getEncoder().encodeToString(byteData);
+	return base64String;
 	}
 
 }

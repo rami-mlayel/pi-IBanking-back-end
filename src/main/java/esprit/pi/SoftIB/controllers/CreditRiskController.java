@@ -28,8 +28,8 @@ public class CreditRiskController {
 		return ResponseEntity.status(HttpStatus.OK).body(risk);
 	}
 	
-	@GetMapping(value = "/LoanCreditRisk/{id}")
-	public ResponseEntity getUser(@PathVariable Long id) {
+	@PostMapping(value = "/LoanCreditRisk/{id}")
+	public ResponseEntity getLoanCreditRisk(@PathVariable Long id) {
 		String risk = null;
 		try {
 			risk=creditRiskService.getRiskByLoanRequestId(id);
@@ -38,6 +38,17 @@ public class CreditRiskController {
 			return ResponseEntity.badRequest().body(ex.getMessage());
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(risk);
+	}
+	@GetMapping(value = "/GenerateTrainingData")
+	public ResponseEntity generateTrainingData() {
+		String base64String = null;
+		try {
+			base64String=creditRiskService.generateTrainingData();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ResponseEntity.badRequest().body(ex.getMessage());
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(base64String);
 	}
 	
 	
