@@ -10,7 +10,7 @@ import java.util.Properties;
 @Service
 public class MailManagerImpl {
 
-    public static void sendEmail(String content, String to) {
+    public static void sendEmail(String Subject , String content, String to) {
 
 
         // Sender's email ID needs to be mentioned
@@ -50,15 +50,14 @@ public class MailManagerImpl {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
             // Set Subject: header field
-            message.setSubject("This is the Subject Line!");
+            message.setSubject(Subject);
 
             // Now set the actual message
-            message.setText("This is actual message");
+            message.setText(content);
 
-            System.out.println("sending...");
             // Send message
             Transport.send(message);
-            System.out.println("Sent message successfully....");
+
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }
