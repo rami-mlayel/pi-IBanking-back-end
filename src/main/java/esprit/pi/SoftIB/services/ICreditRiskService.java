@@ -1,6 +1,7 @@
 package esprit.pi.SoftIB.services;
 
 import java.io.IOException;
+import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -10,4 +11,5 @@ public interface ICreditRiskService {
 	String getRisk(CreditRisk creditRisk) throws JsonProcessingException, IOException, InterruptedException;
     String getRiskByLoanRequestId(Long id) throws IOException, InterruptedException;
     String generateTrainingData() throws IOException;
+    Map<String, String> getStatistics() throws NumberFormatException, IOException, InterruptedException;
 }

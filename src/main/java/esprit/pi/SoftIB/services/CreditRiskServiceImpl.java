@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.time.ZoneId;
 
 
@@ -23,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.api.client.util.Maps;
 import com.opencsv.CSVWriter;
 
 import esprit.pi.SoftIB.entities.Account;
@@ -31,6 +33,7 @@ import esprit.pi.SoftIB.entities.LoanRequest;
 import esprit.pi.SoftIB.enumeration.AccountType;
 import esprit.pi.SoftIB.enumeration.Housing;
 import esprit.pi.SoftIB.enumeration.Job;
+import esprit.pi.SoftIB.enumeration.LoanRequestStatus;
 import esprit.pi.SoftIB.enumeration.LoanType;
 import esprit.pi.SoftIB.enumeration.Sex;
 import esprit.pi.SoftIB.repository.LoanRequestRepository;
@@ -81,16 +84,15 @@ public class CreditRiskServiceImpl implements ICreditRiskService {
                 HttpResponse.BodyHandlers.ofString());
 
 		
-		return response.body().concat("%");
+		return Float.parseFloat( response.body().toString())+"%";
 	}
 	@Override
 	public String getRiskByLoanRequestId(Long id) throws IOException, InterruptedException {
 		LoanRequest loanRequest= loanRequestRepository.findById(id).get();
 		CreditRisk risk= new CreditRisk();
-		Date userBD=loanRequest.getAccount().getUserAccount().getCustomer().getBirthDate();
-		LocalDate today= LocalDate.now();
-		LocalDate date= userBD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		risk.setAge(Period.between(date, today).getYears());
+		Date today= new Date();
+		Integer yearOfBirth= loanRequest.getAccount().getUserAccount().getCustomer().getBirthDate().getYear();
+		risk.setAge( ( (Integer) (today.getYear()-yearOfBirth) ) );
 		risk.setSex(loanRequest.getAccount().getUserAccount().getCustomer().getSex());
 		risk.setJob(loanRequest.getAccount().getUserAccount().getCustomer().getJobStatus());
 		risk.setHousing(loanRequest.getHousing());
@@ -110,17 +112,18 @@ public class CreditRiskServiceImpl implements ICreditRiskService {
 	}
 	@Override
 	public String generateTrainingData() throws IOException {
-		CSVWriter csvWriter = new CSVWriter(new FileWriter("c:\\test\\data.csv"));
+		File file = new File("c:\\test\\data.csv");
+		FileWriter outputfile = new FileWriter(file);
+		CSVWriter csvWriter = new CSVWriter(outputfile);
         String[] header = { "Age", "Sex", "Job", "Housing", "Saving accounts", "Checking account", "Credit amount", "Duration", "Purpose", "Risk" };
         csvWriter.writeNext(header);
 		List<LoanRequest> requests= loanRequestRepository.findAll();
 		for(LoanRequest loanRequest : requests) {
 			String[] record= new String[10];
 			List<String> recordList= new ArrayList<>();			
-			Date userBD=loanRequest.getAccount().getUserAccount().getCustomer().getBirthDate();
-			LocalDate today= LocalDate.now();
-			LocalDate date= userBD.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-			recordList.add(((Integer) Period.between(date, today).getYears()).toString());
+			Date today= new Date();
+			Integer yearOfBirth= loanRequest.getAccount().getUserAccount().getCustomer().getBirthDate().getYear();
+			recordList.add( ( (Integer) (today.getYear()-yearOfBirth) ).toString() );
 			recordList.add(loanRequest.getAccount().getUserAccount().getCustomer().getSex().toString().toLowerCase());
 			Job job=loanRequest.getAccount().getUserAccount().getCustomer().getJobStatus();
 			if(job==Job.NONRESIDENT) {recordList.add("0");}
@@ -157,9 +160,54 @@ public class CreditRiskServiceImpl implements ICreditRiskService {
 			    recordList.add("bad");
                 csvWriter.writeNext(recordList.toArray(record));}
 			}
+	csvWriter.close();
     byte[] byteData = Files.readAllBytes(Paths.get("c:\\test\\data.csv"));
     String base64String = Base64.getEncoder().encodeToString(byteData);
 	return base64String;
+	}
+	@Override
+	public Map<String, String> getStatistics() throws NumberFormatException, IOException, InterruptedException {
+		List<LoanRequest> requests= loanRequestRepository.findAll();
+		Integer totalTreatedRequest=0;
+		Integer acceptedBadRequests=0;
+		Integer rejectedGoodRequests=0;
+		Float biggestAcceptedRisk=0F;
+		Float smallestRejectedRisk=100F;
+		String biggestAcceptedRiskId="";
+		String smallestRejectedRiskId="";
+		for(LoanRequest loanRequest : requests) {
+			if(loanRequest.getLoanRequestStatus()==LoanRequestStatus.APPROVED) {
+				totalTreatedRequest++;
+				Float riskValue=Float.parseFloat( getRiskByLoanRequestId( loanRequest.getId() ).replace("%","") );
+				if(riskValue>=50) {acceptedBadRequests++;}
+				if(riskValue  > biggestAcceptedRisk ) {
+					biggestAcceptedRisk=Float.parseFloat( getRiskByLoanRequestId( loanRequest.getId() ).replace("%","") );
+					biggestAcceptedRiskId=loanRequest.getId().toString();
+				}
+			}
+			if(loanRequest.getLoanRequestStatus()==LoanRequestStatus.REFUSED) {
+				totalTreatedRequest++;
+				Float riskValue=Float.parseFloat( getRiskByLoanRequestId( loanRequest.getId() ).replace("%","") );
+				if(riskValue<50) {rejectedGoodRequests++;}
+				if(riskValue  < smallestRejectedRisk ) {
+					smallestRejectedRisk=Float.parseFloat( getRiskByLoanRequestId( loanRequest.getId() ).replace("%","") );
+					smallestRejectedRiskId=loanRequest.getId().toString();
+				}
+			}		
+		}
+		String acceptedBadRequestsPercentage=( ( acceptedBadRequests/ ( (float)  totalTreatedRequest) ) * 100 )+"%";
+		String rejectedGoodRequestsPercentage=( ( rejectedGoodRequests/ ( (float)  totalTreatedRequest) ) * 100 )+"%";
+		Map<String, String> statistics = Maps.newTreeMap();	
+		statistics.put("totalTreatedRequest", totalTreatedRequest.toString());
+		statistics.put("acceptedBadRequests", acceptedBadRequests.toString());
+		statistics.put("acceptedBadRequestsPercentage", acceptedBadRequestsPercentage);
+		statistics.put("biggestAcceptedRisk", biggestAcceptedRisk+"%");
+		statistics.put("biggestAcceptedRiskId", biggestAcceptedRiskId);
+		statistics.put("rejectedGoodRequests", acceptedBadRequests.toString());
+		statistics.put("rejectedGoodRequestsPercentage", acceptedBadRequestsPercentage);
+		statistics.put("smallestRejectedRisk", smallestRejectedRisk+"%");
+		statistics.put("smallestRejectedRiskId", smallestRejectedRiskId);
+		return statistics;
 	}
 
 }

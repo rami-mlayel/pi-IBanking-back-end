@@ -1,5 +1,7 @@
 package esprit.pi.SoftIB.controllers;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import com.google.api.client.util.Maps;
 
 import esprit.pi.SoftIB.entities.CreditRisk;
 import esprit.pi.SoftIB.services.ICreditRiskService;
@@ -28,7 +32,7 @@ public class CreditRiskController {
 		return ResponseEntity.status(HttpStatus.OK).body(risk);
 	}
 	
-	@PostMapping(value = "/LoanCreditRisk/{id}")
+	@GetMapping(value = "/LoanCreditRisk/{id}")
 	public ResponseEntity getLoanCreditRisk(@PathVariable Long id) {
 		String risk = null;
 		try {
@@ -49,6 +53,17 @@ public class CreditRiskController {
 			return ResponseEntity.badRequest().body(ex.getMessage());
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(base64String);
+	}
+	@GetMapping(value = "/GetStatistics")
+	public ResponseEntity getStatistics() {
+		Map<String, String> statistics = Maps.newTreeMap();
+		try {
+			statistics=creditRiskService.getStatistics();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return ResponseEntity.badRequest().body(ex.getMessage());
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(statistics);
 	}
 	
 	
