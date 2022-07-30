@@ -1,6 +1,7 @@
 package esprit.pi.SoftIB.controllers;
 
 import esprit.pi.SoftIB.entities.LoanRequest;
+import esprit.pi.SoftIB.request.LoanTypeRequest;
 import esprit.pi.SoftIB.services.LoanRequestServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,32 @@ public class LoanRequestController {
             log.info("There was an error: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Couldn't cancel loan request please try again or contact your agency");
+        }
+    }
+
+    @PostMapping(value = "/request/{id}/refuse")
+    @ResponseBody
+    @PreAuthorize("hasRole('ROLE_AGENT')")
+    public ResponseEntity refuseLoanRequest(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(loanRequestService.refuseLoanRequestStatus(id));
+        } catch (Exception e) {
+            log.info("There was an error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Couldn't submit please try again or contact the admin");
+        }
+    }
+
+    @PostMapping(value = "/request/{id}/accept")
+    @ResponseBody
+    @PreAuthorize("hasRole('ROLE_AGENT')")
+    public ResponseEntity acceptLoanRequest(@PathVariable Long id, @RequestBody LoanTypeRequest loanTypeRequest) {
+        try {
+            return ResponseEntity.ok(loanRequestService.acceptLoanRequestStatus(id, loanTypeRequest));
+        } catch (Exception e) {
+            log.info("There was an error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Couldn't submit please try again or contact the admin");
         }
     }
 }

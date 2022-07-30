@@ -2,6 +2,7 @@ package esprit.pi.SoftIB.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.util.Date;
 
 @Entity
 @Getter
+@Setter
 @ToString
 @Table(name = "LOAN")
 public class Loan {
