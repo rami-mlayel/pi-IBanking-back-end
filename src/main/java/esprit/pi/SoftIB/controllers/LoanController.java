@@ -34,4 +34,11 @@ public class LoanController {
                 creditAuto.getSum(),
                 creditAuto.getMonths()));
     }
+
+    @GetMapping(value = "/get-all")
+    @ResponseBody
+    public ResponseEntity getCreditAuto() {
+        return ResponseEntity.ok(loanService.findAllLoan());
+    }
+
 }

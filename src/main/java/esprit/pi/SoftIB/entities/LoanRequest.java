@@ -1,6 +1,7 @@
 package esprit.pi.SoftIB.entities;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import esprit.pi.SoftIB.enumeration.Housing;
 import esprit.pi.SoftIB.enumeration.LoanRequestStatus;
 import esprit.pi.SoftIB.enumeration.LoanType;
@@ -58,5 +59,6 @@ public class LoanRequest {
     private Account account;
 
     @OneToOne
+    @JsonIgnore
     private Loan loan;
 }

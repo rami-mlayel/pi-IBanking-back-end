@@ -1,6 +1,9 @@
 package esprit.pi.SoftIB.services;
 
 import com.nimbusds.jose.shaded.json.JSONObject;
+import esprit.pi.SoftIB.entities.Loan;
+import esprit.pi.SoftIB.repository.LoanRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -10,11 +13,15 @@ import java.io.InputStreamReader;
 import java.net.*;
 import java.net.http.HttpRequest;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Component
 public class LoanServiceImpl implements ICreditService {
+
+    @Autowired
+    private LoanRepository loanRepository;
 
     public JSONObject homeLoan(String type, String sum, String year) throws IOException {
         String urlParameters  = String.format("crediresidence_duree_epargne=%s&amount1=%s&amount2=%s",
@@ -99,6 +106,10 @@ public class LoanServiceImpl implements ICreditService {
         item.put("monthlyPayment", monthlyPayment);
 
         return item;
+    }
+
+    public List<Loan> findAllLoan() {
+        return loanRepository.findAll();
     }
 
     private HttpURLConnection prepareConnexion(String targetUrl, int postDataLength) throws IOException {

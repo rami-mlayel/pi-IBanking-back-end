@@ -42,10 +42,14 @@ public class LoanRequestServiceImpl {
         return "Loan request submitted successfully with ID: " + loanRequestObject.getId();
     }
 
-    public List<LoanRequest> getAllLoanRequest() {
+    public List<LoanRequest> getAllLoanRequestForCustomer() {
         User user = userRepository.findByUsername(jwt.getUserName());
         Account account = accountRepository.findByEmail(user.getEmail());
         return loanRequestRepository.findByAccount(account);
+    }
+
+    public List<LoanRequest> getAllLoanRequest() {
+        return loanRequestRepository.findAll();
     }
 
     public String cancelLoanRequest(Long id) {

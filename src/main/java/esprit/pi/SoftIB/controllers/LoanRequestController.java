@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping("loan")
+@RequestMapping("loan/request")
 public class LoanRequestController {
 
     @Autowired
     private LoanRequestServiceImpl loanRequestService;
 
-    @PostMapping(value = "/request/add")
+    @PostMapping(value = "/add")
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     public ResponseEntity addLoanRequest(@RequestBody LoanRequest loanRequest) {
@@ -31,12 +31,12 @@ public class LoanRequestController {
         }
     }
 
-    @GetMapping(value = "/request/get-all")
+    @GetMapping(value = "/get-all")
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     public ResponseEntity consultLoanRequest() {
         try {
-            return ResponseEntity.ok(loanRequestService.getAllLoanRequest());
+            return ResponseEntity.ok(loanRequestService.getAllLoanRequestForCustomer());
         } catch (Exception e) {
             log.info("There was an error: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -44,7 +44,7 @@ public class LoanRequestController {
         }
     }
 
-    @PutMapping(value = "/request/cancel/{id}")
+    @PutMapping(value = "/cancel/{id}")
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_CUSTOMER')")
     public ResponseEntity cancelLoanRequest(@PathVariable Long id) {
@@ -57,7 +57,7 @@ public class LoanRequestController {
         }
     }
 
-    @PostMapping(value = "/request/{id}/refuse")
+    @PostMapping(value = "/{id}/refuse")
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_AGENT')")
     public ResponseEntity refuseLoanRequest(@PathVariable Long id) {
@@ -70,7 +70,7 @@ public class LoanRequestController {
         }
     }
 
-    @PostMapping(value = "/request/{id}/accept")
+    @PostMapping(value = "/{id}/accept")
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_AGENT')")
     public ResponseEntity acceptLoanRequest(@PathVariable Long id, @RequestBody LoanTypeRequest loanTypeRequest) {
@@ -80,6 +80,19 @@ public class LoanRequestController {
             log.info("There was an error: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Couldn't submit please try again or contact the admin");
+        }
+    }
+
+    @GetMapping(value = "/agent/get-all")
+    @ResponseBody
+    @PreAuthorize("hasRole('ROLE_AGENT')")
+    public ResponseEntity getAllLoanRequest() {
+        try {
+            return ResponseEntity.ok(loanRequestService.getAllLoanRequest());
+        } catch (Exception e) {
+            log.info("There was an error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Couldn't get loan request please try again or contact your agency");
         }
     }
 }
