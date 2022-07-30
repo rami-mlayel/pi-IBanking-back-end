@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Created by omarzougui on 7/25/2022
@@ -138,18 +139,27 @@ public class TransactionServiceImpl implements ITransactionService {
     }
 
     @Override
-    public List<Transaction> getAllTransaction(String type, String senderAccountNumber, String receiverAccountNumber) {
+    public List<Transaction> getAllTransaction(String type, String status, String senderAccountNumber, String receiverAccountNumber) {
         List<Transaction> transactionList = new ArrayList<>();
         transactionRepository.findAll().forEach(transactionList::add);
 
-        if (type != null)
-            transactionList.stream().filter(transaction -> transaction.getTransactionType().toString().equalsIgnoreCase(type));
 
-        if (senderAccountNumber != null)
-            transactionList.stream().filter(transaction -> transaction.getSenderAccountNumber().equalsIgnoreCase(senderAccountNumber));
+        if (!type.equals("-")) {
+            transactionList = transactionList.stream().filter(transaction -> transaction.getTransactionType().toString().equals(type)).collect(Collectors.toList());
+        }
 
-        if (receiverAccountNumber != null)
-            transactionList.stream().filter(transaction -> transaction.getReceiverAccountNumber().equalsIgnoreCase(receiverAccountNumber));
+        if (!status.equals("-")) {
+            transactionList = transactionList.stream().filter(transaction -> transaction.getTransactionStatus().toString().equals(status)).collect(Collectors.toList());
+        }
+
+        if (!receiverAccountNumber.equals("-")) {
+            transactionList = transactionList.stream().filter(transaction -> transaction.getReceiverAccountNumber().equals(receiverAccountNumber)).collect(Collectors.toList());
+        }
+
+        if (!senderAccountNumber.equals("-")) {
+            transactionList = transactionList.stream().filter(transaction -> transaction.getSenderAccountNumber().equals(senderAccountNumber)).collect(Collectors.toList());
+        }
+
 
         return transactionList;
     }
