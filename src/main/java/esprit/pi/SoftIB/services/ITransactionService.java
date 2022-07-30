@@ -19,6 +19,6 @@ public interface ITransactionService {
 
     Transaction transferMoney(String senderAccountNumber, String receiverAccountNumber, BigDecimal amount);
 
-    List<Transaction> getAllTransaction(String type, String senderAccountNumber, String receiverAccountNumber);
+    List<Transaction> getAllTransaction(String type, String status,String senderAccountNumber, String receiverAccountNumber);
 
 }

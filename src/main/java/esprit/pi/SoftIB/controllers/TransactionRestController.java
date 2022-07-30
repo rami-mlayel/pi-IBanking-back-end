@@ -31,10 +31,10 @@ public class TransactionRestController {
     }
 
     @GetMapping(value = "/GET/all")
-    public ResponseEntity getAllTransactions(@RequestParam(name = "TYPE", required = false) String type, @RequestParam(name = "SENDER", required = false) String sender, @RequestParam(name = "RECEIVER", required = false) String receiver) {
+    public ResponseEntity getAllTransactions(@RequestParam(name = "TYPE", required = false) String type, @RequestParam(name = "STATUS", required = false) String status,@RequestParam(name = "SENDER", required = false) String sender, @RequestParam(name = "RECEIVER", required = false) String receiver) {
 
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(transactionService.getAllTransaction(type, sender, receiver));
+            return ResponseEntity.status(HttpStatus.OK).body(transactionService.getAllTransaction(type, status, sender, receiver));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().body(e.getMessage());
